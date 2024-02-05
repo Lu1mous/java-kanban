@@ -1,3 +1,4 @@
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,6 +15,10 @@ public class TaskManager {
         this.subtasks = new HashMap<>();
     }
 
+    public int getNewId(){
+        idCount++;
+        return idCount;
+    }
 
     public Collection<Task> getTaskCollection() {
         return tasks.values();
@@ -52,20 +57,17 @@ public class TaskManager {
     }
 
     public void createTask(Task task){
-        idCount++;
-        task.setId(idCount);
+        task.setId(getNewId());
         tasks.put(task.getId(), task);
     }
 
     public void createEpic(Epic epic){
-        idCount++;
-        epic.setId(idCount);
+        epic.setId(getNewId());
         epics.put(epic.getId(), epic);
     }
 
     public void createSubtask(Subtask subtask){
-        idCount++;
-        subtask.setId(idCount);
+        subtask.setId(getNewId());
         subtasks.put(subtask.getId(), subtask);
     }
 
@@ -88,11 +90,15 @@ public class TaskManager {
     }
 
     public void removeEpicOfId(int id){
+        for (Subtask subtask : epics.get(id).getSubtasks()) {
+            subtasks.remove(subtask.getId());
+        }
         epics.remove(id);
     }
 
     public void removeSubtaskOfId(int id){
         subtasks.remove(id);
+        updateStatusOfEpic(subtasks.get(id).getEpic());
     }
 
     public ArrayList<Subtask> getSubtasksOfEpic(int id){
