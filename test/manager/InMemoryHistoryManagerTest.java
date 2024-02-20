@@ -1,0 +1,62 @@
+package manager;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+import tasks.TaskStatus;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class InMemoryHistoryManagerTest {
+
+    private static TaskManager taskManager;
+    private static HistoryManager historyManager;
+    private static Task firstTask;
+    private static Task secondTask;
+    private static Epic firstEpic;
+    private static Epic secondEpic;
+    private static Subtask firstSubtask;
+    private static Subtask secondSubtask;
+    private static Subtask thirdSubtask;
+
+    @BeforeAll
+    public static void createTasks(){
+        taskManager = Managers.getDefault();
+        historyManager = Managers.getDefaultHistory();
+        firstTask = new Task("Задача 1", "Первая задача", TaskStatus.NEW);
+        secondTask = new Task("Задача 2", "Вторая задача", TaskStatus.NEW);
+        firstEpic = new Epic("Эпик 1", "Первый эпик", TaskStatus.NEW);
+        secondEpic = new Epic("Эпик 2", "Второй эпик", TaskStatus.NEW);
+        firstSubtask = new Subtask("Подзадача 1", "Первая подзадача", TaskStatus.NEW, firstEpic);
+        secondSubtask = new Subtask("Подзадача 2", "Вторая подзадача", TaskStatus.NEW, firstEpic);
+        thirdSubtask = new Subtask("Подзадача 3", "Третья подзадача", TaskStatus.NEW, secondEpic);
+        taskManager.createTask(firstTask);
+        taskManager.createTask(secondTask);
+        taskManager.createEpic(firstEpic);
+        taskManager.createEpic(secondEpic);
+        taskManager.createSubtask(firstSubtask);
+        taskManager.createSubtask(secondSubtask);
+    }
+
+    @Test
+    public void shouldBeSizeEquals10OfLess(){
+        for (int i = 0; i < 5; i++) {
+            historyManager.add(firstTask);
+            historyManager.add(firstEpic);
+            historyManager.add(firstSubtask);
+        }
+        System.out.println(historyManager.getHistory().size());
+        assertEquals(10, historyManager.getHistory().size());
+    }
+
+    @Test
+    public void shouldBeAddHistoryByGetTaskOfId(){
+        Task firstHistory = taskManager.getTaskOfId(1);
+        Task secondHistory = taskManager.getSubtaskOfId(6);
+        assertEquals(firstHistory, taskManager.getHistoryManager().getHistory().toArray()[0]);
+        assertEquals(secondHistory, taskManager.getHistoryManager().getHistory().toArray()[1]);
+    }
+
+}

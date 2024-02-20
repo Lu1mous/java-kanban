@@ -1,6 +1,6 @@
 package test;
 
-import manager.TaskManager;
+import manager.InMemoryTaskManager;
 import tasks.*;
 
 import java.util.Collection;
@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Начало тесто. Создание объектов.");
-        TaskManager taskManager = new TaskManager();
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
         taskManager.createTask(new Task("Task_1", "1", TaskStatus.NEW));
         taskManager.createTask(new Task("Task_2", "2", TaskStatus.NEW));
         taskManager.createTask(new Task("Task_3", "3", TaskStatus.NEW));
