@@ -179,7 +179,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     public HistoryManager getHistoryManager(){
         return historyManager;
-        //return Collections.unmodifiableCollection(historyManager.getHistory());
     }
 
 }
