@@ -22,6 +22,6 @@ public class InMemoryHistoryManager implements HistoryManager{
 
     @Override
     public Collection<Task> getHistory() {
-        return historyTasks;
+        return Collections.unmodifiableCollection(historyTasks);
     }
 }
