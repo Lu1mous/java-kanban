@@ -2,23 +2,20 @@ package manager;
 
 import tasks.Task;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager{
 
-    private ArrayList<Task> historyTasks;
+    private ArrayDeque<Task> historyTasks;
 
     public InMemoryHistoryManager(){
-        historyTasks = new ArrayList<>();
+        historyTasks = new ArrayDeque<>(10);
     }
 
     @Override
     public void add(Task task) {
         if(historyTasks.size() >= 10){
-            historyTasks.remove(0);
+            historyTasks.removeFirst();
         }
         historyTasks.add(task);
     }

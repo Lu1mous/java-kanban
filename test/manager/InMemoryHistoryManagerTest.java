@@ -47,7 +47,7 @@ class InMemoryHistoryManagerTest {
             historyManager.add(firstEpic);
             historyManager.add(firstSubtask);
         }
-        System.out.println(historyManager.getHistory().size());
+        System.out.println(historyManager.getHistory());
         assertEquals(10, historyManager.getHistory().size());
     }
 
@@ -55,8 +55,8 @@ class InMemoryHistoryManagerTest {
     public void shouldBeAddHistoryByGetTaskOfId(){
         Task firstHistory = taskManager.getTaskOfId(1);
         Task secondHistory = taskManager.getSubtaskOfId(6);
-        assertEquals(firstHistory, taskManager.getHistoryManager().getHistory().toArray()[0]);
-        assertEquals(secondHistory, taskManager.getHistoryManager().getHistory().toArray()[1]);
+        assertEquals(firstHistory, taskManager.getHistoryTasks().toArray()[0]);
+        assertEquals(secondHistory, taskManager.getHistoryTasks().toArray()[1]);
     }
 
 }

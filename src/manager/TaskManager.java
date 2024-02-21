@@ -45,6 +45,6 @@ public interface TaskManager {
 
     Collection<Subtask> getSubtasksOfEpic(int id);
 
-    HistoryManager getHistoryManager();
+    Collection<Task> getHistoryTasks();
 
 }

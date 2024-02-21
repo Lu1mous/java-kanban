@@ -177,8 +177,8 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    public HistoryManager getHistoryManager(){
-        return historyManager;
+    public Collection<Task> getHistoryTasks(){
+        return historyManager.getHistory();
     }
 
 }
