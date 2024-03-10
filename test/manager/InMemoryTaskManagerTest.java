@@ -23,7 +23,7 @@ class InMemoryTaskManagerTest {
     private static Subtask thirdSubtask;
 
     @BeforeEach
-    public void createTasks(){
+    public void createTasks() {
         taskManager = Managers.getDefault();
         firstTask = new Task("Задача 1", "Первая задача", TaskStatus.NEW);
         secondTask = new Task("Задача 2", "Вторая задача", TaskStatus.NEW);
@@ -41,7 +41,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldBeCreateTask(){
+    public void shouldBeCreateTask() {
         Collection<Task> taskCollection = taskManager.getTaskCollection();
         System.out.println(taskCollection);
         assertEquals(firstTask, taskCollection.toArray()[0], "Задача 1 не создана");
@@ -49,7 +49,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldBeCreateEpic(){
+    public void shouldBeCreateEpic() {
         Collection<Epic> epicCollection = taskManager.getEpicCollection();
         System.out.println(epicCollection);
         assertEquals(firstEpic, epicCollection.toArray()[0], "Эпик 1 не создана");
@@ -57,7 +57,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldBeCreateSubtask(){
+    public void shouldBeCreateSubtask() {
         Collection<Subtask> subtaskCollection = taskManager.getSubtaskCollection();
         System.out.println(subtaskCollection);
         assertEquals(firstSubtask, subtaskCollection.toArray()[0], "Подзадача 1 не создана");
@@ -65,40 +65,40 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldBeGetTaskOfId(){
+    public void shouldBeGetTaskOfId() {
         assertEquals(firstTask, taskManager.getTaskOfId(1), "Задача не найдена");
     }
 
     @Test
-    public void shouldBeGetEpicOfId(){
+    public void shouldBeGetEpicOfId() {
         assertEquals(firstEpic, taskManager.getEpicOfId(3), "Эпик не найден");
     }
 
     @Test
-    public void shouldBeGetSubtaskOfId(){
+    public void shouldBeGetSubtaskOfId() {
         assertEquals(firstSubtask, taskManager.getSubtaskOfId(5), "Подзадача не найдена");
     }
 
     @Test
-    public void shouldBeRemoveAllTasks(){
+    public void shouldBeRemoveAllTasks() {
         taskManager.removeTasks();
         assertEquals(0,taskManager.getTaskCollection().size(), "В списке есть задачи");
     }
 
     @Test
-    public void shouldBeRemoveAllEpics(){
+    public void shouldBeRemoveAllEpics() {
         taskManager.removeEpics();
         assertEquals(0,taskManager.getEpicCollection().size(), "В списке есть эпики");
     }
 
     @Test
-    public void shouldBeRemoveAllSubtasks(){
+    public void shouldBeRemoveAllSubtasks() {
         taskManager.removeSubtasks();
         assertEquals(0,taskManager.getSubtaskCollection().size(), "В списке есть подзадачи");
     }
 
     @Test
-    public void shouldBeUpdateStatusEpic(){
+    public void shouldBeUpdateStatusEpic() {
         firstSubtask.setStatus(TaskStatus.IN_PROGRESS);
         thirdSubtask.setStatus(TaskStatus.DONE);
         taskManager.updateSubtask(firstSubtask);
@@ -108,7 +108,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldBeCloneTask(){
+    public void shouldBeCloneTask() {
         Task task = firstTask.clone();
         Subtask subtask = firstSubtask.clone();
         Epic epic = firstEpic.clone();

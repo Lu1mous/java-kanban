@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SubtaskTest {
     @Test
-    public void shouldBeEqualsSubtaskSameId(){
+    public void shouldBeEqualsSubtaskSameId() {
         Task subtaskFirst = new Task("Задача 1", "Первая задача", TaskStatus.NEW);
         Task subtaskSecond = new Task("Задача 2", "Вторая задача", TaskStatus.NEW);
         subtaskFirst.setId(1);

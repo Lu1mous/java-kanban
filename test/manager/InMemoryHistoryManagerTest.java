@@ -26,7 +26,7 @@ class InMemoryHistoryManagerTest {
     private static Subtask thirdSubtask;
 
     @BeforeEach
-    public void createTasks(){
+    public void createTasks() {
         taskManager = Managers.getDefault();
         historyManager = Managers.getDefaultHistory();
         firstTask = new Task("Задача 1", "Первая задача", TaskStatus.NEW);
@@ -45,7 +45,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void shouldBeSizeEquals3(){
+    public void shouldBeSizeEquals3() {
         for (int i = 0; i < 5; i++) {
             historyManager.add(firstTask);
             historyManager.add(firstEpic);
@@ -56,7 +56,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void shouldBeAddHistoryByGetTaskOfId(){
+    public void shouldBeAddHistoryByGetTaskOfId() {
         Task firstHistory = taskManager.getTaskOfId(1);
         Task secondHistory = taskManager.getSubtaskOfId(5);
         assertEquals(firstHistory, taskManager.getHistoryTasks().toArray()[1]);
@@ -64,7 +64,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void shouldBeSavedVersionTask(){
+    public void shouldBeSavedVersionTask() {
         Task task = taskManager.getTaskOfId(1);
         Task subtask = taskManager.getSubtaskOfId(5);
         task.setStatus(TaskStatus.DONE);
@@ -76,7 +76,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void shouldBeDeletedHistoryTask(){
+    public void shouldBeDeletedHistoryTask() {
         Task task = taskManager.getTaskOfId(1);
         Task subtask = taskManager.getSubtaskOfId(5);
         assertEquals(2, taskManager.getHistoryTasks().size());
