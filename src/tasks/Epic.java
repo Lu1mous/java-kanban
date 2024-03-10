@@ -14,11 +14,11 @@ public class Epic extends Task{
         return subtasks;
     }
 
-    public void addSubtask(Subtask subtask){
+    public void addSubtask(Subtask subtask) {
         subtasks.add(subtask);
     }
     @Override
-    public Epic clone(){
+    public Epic clone() {
         Epic cloneEpic = new Epic(this.getName(), this.getDescription(), this.getStatus());
         cloneEpic.setId(this.getId());
         cloneEpic.subtasks = new ArrayList<>(this.subtasks);

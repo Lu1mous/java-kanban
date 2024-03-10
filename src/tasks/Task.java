@@ -40,7 +40,7 @@ public class Task {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "tasks.Task {name = " + name + "/ description = " + description +
                 "/ id = " + id + "/ status = " + status +" }";
     }
@@ -58,7 +58,7 @@ public class Task {
         return Objects.hash(id);
     }
 
-    public Task clone(){
+    public Task clone() {
         Task cloneTask = new Task(this.name, this.description, this.status);
         cloneTask.setId(this.id);
         return cloneTask;
