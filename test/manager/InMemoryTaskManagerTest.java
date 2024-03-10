@@ -107,5 +107,15 @@ class InMemoryTaskManagerTest {
         assertEquals(TaskStatus.DONE, secondEpic.getStatus(), "Статус не обновлен");
     }
 
+    @Test
+    public void shouldBeCloneTask(){
+        Task task = firstTask.clone();
+        Subtask subtask = firstSubtask.clone();
+        Epic epic = firstEpic.clone();
+        assertEquals(firstTask, task);
+        assertEquals(firstSubtask, subtask);
+        assertEquals(firstEpic, epic);
+    }
+
 
 }

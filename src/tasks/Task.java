@@ -55,7 +55,13 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, id, status);
+        return Objects.hash(id);
+    }
+
+    public Task clone(){
+        Task cloneTask = new Task(this.name, this.description, this.status);
+        cloneTask.setId(this.id);
+        return cloneTask;
     }
 
 }
