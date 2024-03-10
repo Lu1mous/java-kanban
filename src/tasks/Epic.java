@@ -17,6 +17,7 @@ public class Epic extends Task {
     public void addSubtask(Subtask subtask) {
         subtasks.add(subtask);
     }
+
     @Override
     public Epic clone() {
         Epic cloneEpic = new Epic(this.getName(), this.getDescription(), this.getStatus());

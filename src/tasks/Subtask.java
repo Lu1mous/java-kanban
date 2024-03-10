@@ -12,6 +12,7 @@ public class Subtask extends Task {
     public Epic getEpic() {
         return epic;
     }
+
     @Override
     public Subtask clone() {
         Subtask cloneSubtask = new Subtask(this.getName(), this.getDescription(), this.getStatus(), this.getEpic());
