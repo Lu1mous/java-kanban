@@ -63,18 +63,6 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void shouldBeSavedVersionTask() {
-        Task task = taskManager.getTaskOfId(1);
-        Task subtask = taskManager.getSubtaskOfId(5);
-        task.setStatus(TaskStatus.DONE);
-        subtask.setStatus(TaskStatus.IN_PROGRESS);
-        Task taskHistory = (Task)taskManager.getHistoryTasks().toArray()[1];
-        Subtask subtaskHistory = (Subtask) taskManager.getHistoryTasks().toArray()[0];
-        assertNotEquals(taskHistory.getStatus(), task.getStatus());
-        assertNotEquals(subtaskHistory.getStatus(), subtask.getStatus());
-    }
-
-    @Test
     public void shouldBeDeletedHistoryTask() {
         Task task = taskManager.getTaskOfId(1);
         Task subtask = taskManager.getSubtaskOfId(5);

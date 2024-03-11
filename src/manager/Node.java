@@ -3,9 +3,9 @@ package manager;
 import tasks.Task;
 
 public class Node {
-    public Task data;
-    public Node next;
-    public Node prev;
+    Task data;
+    Node next;
+    Node prev;
 
     public Node(Task data) {
         this.data = data;
