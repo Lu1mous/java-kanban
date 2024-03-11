@@ -2,7 +2,7 @@ package tasks;
 
 import java.util.ArrayList;
 
-public class Epic extends Task{
+public class Epic extends Task {
     private ArrayList<Subtask> subtasks;
 
     public Epic(String name, String description, TaskStatus status) {
@@ -14,8 +14,16 @@ public class Epic extends Task{
         return subtasks;
     }
 
-    public void addSubtask(Subtask subtask){
+    public void addSubtask(Subtask subtask) {
         subtasks.add(subtask);
+    }
+
+    @Override
+    public Epic clone() {
+        Epic cloneEpic = new Epic(this.getName(), this.getDescription(), this.getStatus());
+        cloneEpic.setId(this.getId());
+        cloneEpic.subtasks = new ArrayList<>(this.subtasks);
+        return cloneEpic;
     }
 
 }

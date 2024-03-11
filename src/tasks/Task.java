@@ -8,7 +8,7 @@ public class Task {
     private int id;
     private TaskStatus status;
 
-    public Task(String name, String description, TaskStatus status){
+    public Task(String name, String description, TaskStatus status) {
         this.name = name;
         this.description = description;
         this.status = status;
@@ -40,9 +40,9 @@ public class Task {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "tasks.Task {name = " + name + "/ description = " + description +
-                "/ id = " + id + "/ status = " + status +" }";
+                "/ id = " + id + "/ status = " + status + " }";
     }
 
     @Override
@@ -55,7 +55,13 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, id, status);
+        return Objects.hash(id);
+    }
+
+    public Task clone() {
+        Task cloneTask = new Task(this.name, this.description, this.status);
+        cloneTask.setId(this.id);
+        return cloneTask;
     }
 
 }
