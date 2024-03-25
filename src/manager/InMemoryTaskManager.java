@@ -9,9 +9,9 @@ import  java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     private int idCount = 0;
-    private HashMap<Integer, Task> tasks;
-    private HashMap<Integer, Epic> epics;
-    private HashMap<Integer, Subtask> subtasks;
+    protected HashMap<Integer, Task> tasks;
+    protected HashMap<Integer, Epic> epics;
+    protected HashMap<Integer, Subtask> subtasks;
     private final HistoryManager historyManager;
 
     public InMemoryTaskManager() {
@@ -21,7 +21,7 @@ public class InMemoryTaskManager implements TaskManager {
         this.historyManager = Managers.getDefaultHistory();
     }
 
-    private int getNewId() {
+    protected int getNewId() {
         idCount++;
         return idCount;
     }

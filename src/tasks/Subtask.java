@@ -19,4 +19,11 @@ public class Subtask extends Task {
         cloneSubtask.setId(this.getId());
         return cloneSubtask;
     }
+
+    @Override
+    public String toString() {
+        return this.getId() + "," + TypeTask.SUBTASK + "," + this.getName() + "," + this.getStatus()
+                + "," + this.getDescription() + "," + this.epic.getId() + "\n";
+    }
+
 }
