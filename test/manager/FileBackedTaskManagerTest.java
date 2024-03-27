@@ -41,7 +41,7 @@ class FileBackedTaskManagerTest {
         taskManager.getTaskOfId(2);
         taskManager.getEpicOfId(3);
         taskManager.getSubtaskOfId(4);
-        TaskManager taskManagerCopy = FileBackedTaskManager.loadFromFile();
+        TaskManager taskManagerCopy = FileBackedTaskManager.loadFromFile("saveTasks.txt");
         Collection<Task> taskCollection = taskManagerCopy.getTaskCollection();
         Collection<Epic> epicCollection = taskManagerCopy.getEpicCollection();
         Collection<Subtask> subtaskCollection = taskManagerCopy.getSubtaskCollection();

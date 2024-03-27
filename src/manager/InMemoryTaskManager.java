@@ -8,7 +8,7 @@ import java.util.HashMap;
 import  java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
-    private int idCount = 0;
+    protected int idCount = 0;
     protected HashMap<Integer, Task> tasks;
     protected HashMap<Integer, Epic> epics;
     protected HashMap<Integer, Subtask> subtasks;
