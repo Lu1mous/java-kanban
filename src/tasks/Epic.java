@@ -26,4 +26,10 @@ public class Epic extends Task {
         return cloneEpic;
     }
 
+    @Override
+    public String toString() {
+        return this.getId() + "," + TypeTask.EPIC + "," + this.getName() + "," + this.getStatus()
+                + "," + this.getDescription() + "," + "\n";
+    }
+
 }

@@ -12,7 +12,6 @@ public class Task {
         this.name = name;
         this.description = description;
         this.status = status;
-
     }
 
     public String getName() {
@@ -41,8 +40,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "tasks.Task {name = " + name + "/ description = " + description +
-                "/ id = " + id + "/ status = " + status + " }";
+        return id + "," + TypeTask.TASK + "," + name + "," + status + "," + description + "," + "\n";
     }
 
     @Override
