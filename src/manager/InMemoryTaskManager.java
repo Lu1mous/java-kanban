@@ -2,10 +2,8 @@ package manager;
 
 import tasks.*;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import  java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     protected int idCount = 0;
@@ -13,12 +11,14 @@ public class InMemoryTaskManager implements TaskManager {
     protected HashMap<Integer, Epic> epics;
     protected HashMap<Integer, Subtask> subtasks;
     private final HistoryManager historyManager;
+    private final TreeSet<Task> priorityTasks;
 
     public InMemoryTaskManager() {
         this.tasks = new HashMap<>();
         this.epics = new HashMap<>();
         this.subtasks = new HashMap<>();
         this.historyManager = Managers.getDefaultHistory();
+        this.priorityTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
     }
 
     protected int getNewId() {
@@ -45,6 +45,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void removeTasks() {
         tasks.clear();
         historyManager.clear();
+        priorityTasks.clear();;
     }
 
     @Override
@@ -52,6 +53,7 @@ public class InMemoryTaskManager implements TaskManager {
         subtasks.clear();
         epics.clear();
         historyManager.clear();
+        priorityTasks.clear();;
     }
 
     @Override
@@ -62,6 +64,7 @@ public class InMemoryTaskManager implements TaskManager {
             updateStatusOfEpic(epic);
         }
         historyManager.clear();
+        priorityTasks.clear();
     }
 
     @Override
@@ -87,8 +90,16 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createTask(Task task) {
-        task.setId(getNewId());
-        tasks.put(task.getId(), task);
+        boolean isIntersection = priorityTasks
+                .stream()
+                .anyMatch(task1 -> task1.isIntersection(task));
+        if (!isIntersection) {
+            task.setId(getNewId());
+            tasks.put(task.getId(), task);
+            if (task.getStartTime() != null) {
+                priorityTasks.add(task);
+            }
+        }
     }
 
     @Override
@@ -99,13 +110,26 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createSubtask(Subtask subtask) {
-        subtask.setId(getNewId());
-        subtasks.put(subtask.getId(), subtask);
+        boolean isIntersection = priorityTasks
+                .stream()
+                .anyMatch(subtask1 -> subtask1.isIntersection(subtask));
+        if (!isIntersection) {
+            subtask.setId(getNewId());
+            subtasks.put(subtask.getId(), subtask);
+            if (subtask.getStartTime() != null) {
+                priorityTasks.add(subtask);
+            }
+        }
     }
 
     @Override
     public void updateTask(Task task) {
-        tasks.put(task.getId(), task);
+        boolean isIntersection = priorityTasks
+                .stream()
+                .anyMatch(task1 -> task1.isIntersection(task));
+        if (!isIntersection) {
+            tasks.put(task.getId(), task);
+        }
     }
 
     @Override
@@ -116,14 +140,23 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateSubtask(Subtask subtask) {
-        subtasks.put(subtask.getId(), subtask);
-        updateStatusOfEpic(subtask.getEpic());
+        boolean isIntersection = priorityTasks
+                .stream()
+                .anyMatch(task1 -> task1.isIntersection(subtask));
+        if (!isIntersection) {
+            subtasks.put(subtask.getId(), subtask);
+            updateStatusOfEpic(subtask.getEpic());
+        }
     }
 
     @Override
     public void removeTaskOfId(int id) {
-        tasks.remove(id);
-        historyManager.remove(id);
+        Task task = tasks.get(id);
+        if (task != null) {
+            tasks.remove(id);
+            historyManager.remove(id);
+            priorityTasks.remove(task);
+        }
     }
 
     @Override
@@ -133,6 +166,7 @@ public class InMemoryTaskManager implements TaskManager {
             for (Subtask subtask : epic.getSubtasks()) {
                 subtasks.remove(subtask.getId());
                 historyManager.remove(subtask.getId());
+                priorityTasks.remove(subtask);
             }
             epics.remove(id);
             historyManager.remove(id);
@@ -150,6 +184,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
         historyManager.remove(id);
+        priorityTasks.remove(subtask);
     }
 
     @Override
@@ -186,6 +221,14 @@ public class InMemoryTaskManager implements TaskManager {
 
     public List<Task> getHistoryTasks() {
         return historyManager.getHistory();
+    }
+
+    public Collection<Task> getPrioritizedTasks() {
+        if (priorityTasks.isEmpty()) {
+            priorityTasks.addAll(tasks.values());
+            priorityTasks.addAll(subtasks.values());
+        }
+        return Collections.unmodifiableCollection(priorityTasks);
     }
 
 }

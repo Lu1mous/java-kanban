@@ -8,7 +8,8 @@ import tasks.TypeTask;
 public class ConverterTask {
     public static String taskToCsv(Task task) {
         return task.getId() + "," + TypeTask.TASK + "," + task.getName() + "," + task.getStatus()
-                + "," + task.getDescription() + "," + "\n";
+                + "," + task.getDescription() + "," + task.getStartTime().format(Task.getDataTimeFormat())
+                + "," + task.getDuration().toMinutes() + "\n";
     }
 
     public static String epicToCsv(Epic epic) {
@@ -18,6 +19,8 @@ public class ConverterTask {
 
     public static String subtaskToCsv(Subtask subtask) {
         return subtask.getId() + "," + TypeTask.SUBTASK + "," + subtask.getName() + "," + subtask.getStatus()
-                + "," + subtask.getDescription() + ","  + subtask.getEpic().getId() + "\n";
+                + "," + subtask.getDescription() + ","  + subtask.getEpic().getId() + ","
+                + subtask.getStartTime().format(Task.getDataTimeFormat()) + ","
+                + subtask.getDuration().toMinutes() + "\n";
     }
 }
