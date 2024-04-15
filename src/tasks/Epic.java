@@ -48,7 +48,7 @@ public class Epic extends Task {
                     }
                 }
         );
-        if( this.startTime != null && this.endTime != null) {
+        if ( this.startTime != null && this.endTime != null) {
             duration = Duration.between(startTime, endTime);
         }
     }
