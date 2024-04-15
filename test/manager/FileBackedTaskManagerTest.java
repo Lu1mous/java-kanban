@@ -44,30 +44,14 @@ class FileBackedTaskManagerTest extends TaskManagerTest {
     public void testExceptionSave() {
         String fileName = "saveTasks.txt";
         Path path = Paths.get(fileName);
-        assertThrows(ManagerSaveException.class, () -> {
-            try (Reader fileReader = new FileReader(fileName)) {
-                if (!Files.isDirectory(path)) {
-                    Files.deleteIfExists(path);
-                }
-            } catch (IOException e) {
-                throw new ManagerSaveException();
-            }
-        }, "Исключение не вызвано");
+        assertDoesNotThrow(() -> taskManager.updateTask(firstTask), "Исключение");
     }
 
     @Test
     public void testExceptionLoad() {
         String fileName = "saveTasks.txt";
         Path path = Paths.get(fileName);
-        assertThrows(ManagerLoadException.class, () -> {
-            try (Reader fileReader = new FileReader(fileName)) {
-                if (!Files.isDirectory(path)) {
-                    Files.deleteIfExists(path);
-                }
-            } catch (IOException e) {
-                throw new ManagerLoadException();
-            }
-        }, "Исключение не вызвано");
+        assertDoesNotThrow(() -> FileBackedTaskManager.loadFromFile(fileName));
     }
 
 }
