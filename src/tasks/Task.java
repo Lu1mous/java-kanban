@@ -80,14 +80,13 @@ public class Task {
     }
 
     public boolean isIntersection(Task task) {
-        if (this.equals(task)) {
-            return false;
-        }
         LocalDateTime startTime1 = task.getStartTime();
         LocalDateTime endTime1 = task.getEndTime();
         LocalDateTime startTime2 = this.getStartTime();
         LocalDateTime endTime2 = this.getEndTime();
-        return startTime1.isBefore(endTime2) && endTime1.isAfter(startTime2);
+        return startTime1.isBefore(endTime2) && startTime1.isAfter(startTime2)
+                || endTime1.isBefore(endTime2) && endTime1.isAfter(startTime2)
+                || (endTime1.isEqual(endTime2) && startTime1.isEqual(startTime2));
     }
 
     @Override

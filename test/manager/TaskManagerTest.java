@@ -152,13 +152,20 @@ public abstract class TaskManagerTest {
 
     @Test
     public void shouldBeIntersection() {
-        boolean isIntersection = firstTask.isIntersection(secondSubtask);
-        assertFalse(isIntersection, "Пересечение");
-        firstTask.setDuration(Duration.of(5, ChronoUnit.HOURS));
-        taskManager.updateTask(firstTask);
-        isIntersection = firstTask.isIntersection(secondTask);
-        assertTrue(isIntersection, "Нет пересечения");
+        assertThrows(RuntimeException.class, () -> taskManager.createTask(secondTask) , "Нет пересечения");
+        Task t = new Task("Задача", "Проверка", TaskStatus.DONE,
+                LocalDateTime.of(2024, 5,10, 20, 0),
+                Duration.of(3, ChronoUnit.HOURS));
+        assertDoesNotThrow(() -> taskManager.updateTask(t), "Пересечение задач");
 
+    }
+
+    @Test
+    public void DoesNotCreateDoubleTask() {
+        assertThrows(TaskIsIntersectionException.class, () -> {
+            taskManager.createTask(firstTask);
+            taskManager.createTask(firstTask);
+        });
     }
 
     @Test

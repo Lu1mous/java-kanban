@@ -3,6 +3,7 @@ package manager;
 import tasks.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InMemoryTaskManager implements TaskManager {
     protected int idCount = 0;
@@ -10,7 +11,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected HashMap<Integer, Epic> epics;
     protected HashMap<Integer, Subtask> subtasks;
     private final HistoryManager historyManager;
-    private final TreeSet<Task> priorityTasks;
+    private TreeSet<Task> priorityTasks;
 
     public InMemoryTaskManager() {
         this.tasks = new HashMap<>();
@@ -44,7 +45,9 @@ public class InMemoryTaskManager implements TaskManager {
     public void removeTasks() {
         tasks.clear();
         historyManager.clear();
-        priorityTasks.clear();;
+        priorityTasks = priorityTasks.stream()
+                .filter(task -> task.getClass() != Task.class)
+                .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Task::getStartTime))));
     }
 
     @Override
@@ -52,7 +55,9 @@ public class InMemoryTaskManager implements TaskManager {
         subtasks.clear();
         epics.clear();
         historyManager.clear();
-        priorityTasks.clear();;
+        priorityTasks = priorityTasks.stream()
+                .filter(task -> task.getClass() != Epic.class && task.getClass() != Subtask.class)
+                .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Task::getStartTime))));
     }
 
     @Override
@@ -63,7 +68,9 @@ public class InMemoryTaskManager implements TaskManager {
             updateStatusOfEpic(epic);
         }
         historyManager.clear();
-        priorityTasks.clear();
+        priorityTasks = priorityTasks.stream()
+                .filter(task -> task.getClass() != Subtask.class)
+                .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Task::getStartTime))));
     }
 
     @Override
@@ -98,6 +105,8 @@ public class InMemoryTaskManager implements TaskManager {
             if (task.getStartTime() != null) {
                 priorityTasks.add(task);
             }
+        } else {
+            throw new TaskIsIntersectionException("Пересечение задач");
         }
     }
 
@@ -118,6 +127,8 @@ public class InMemoryTaskManager implements TaskManager {
             if (subtask.getStartTime() != null) {
                 priorityTasks.add(subtask);
             }
+        } else {
+            throw new TaskIsIntersectionException("Пересечение задач");
         }
     }
 
@@ -125,15 +136,26 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateTask(Task task) {
         boolean isIntersection = priorityTasks
                 .stream()
+                .filter(t -> !(t.equals(task)))
                 .anyMatch(task1 -> task1.isIntersection(task));
         if (!isIntersection) {
             tasks.put(task.getId(), task);
+            priorityTasks = priorityTasks.stream()
+                    .filter(task1 -> !(task1.equals(task)))
+                    .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Task::getStartTime))));
+            priorityTasks.add(task);
+        } else {
+            throw new TaskIsIntersectionException("Пересечение задач");
         }
     }
 
     @Override
     public void updateEpic(Epic epic) {
         epics.put(epic.getId(), epic);
+        priorityTasks = priorityTasks.stream()
+                .filter(epic1 -> !(epic1.equals(epic)))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Task::getStartTime))));
+        priorityTasks.add(epic);
         updateStatusOfEpic(epic);
     }
 
@@ -141,10 +163,17 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateSubtask(Subtask subtask) {
         boolean isIntersection = priorityTasks
                 .stream()
+                .filter(t -> !(t.equals(subtask)))
                 .anyMatch(task1 -> task1.isIntersection(subtask));
         if (!isIntersection) {
             subtasks.put(subtask.getId(), subtask);
+            priorityTasks = priorityTasks.stream()
+                    .filter(subtask1 -> !(subtask1.equals(subtask)))
+                    .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Task::getStartTime))));
+            priorityTasks.add(subtask);
             updateStatusOfEpic(subtask.getEpic());
+        } else {
+            throw new TaskIsIntersectionException("Пересечение задач");
         }
     }
 

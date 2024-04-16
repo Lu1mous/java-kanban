@@ -72,6 +72,11 @@ class InMemoryTaskManagerTest extends TaskManagerTest {
     }
 
     @Test
+    public void DoesNotCreateDoubleTask() {
+        super.DoesNotCreateDoubleTask();
+    }
+
+    @Test
     public void shouldBeCloneTask() {
         super.shouldBeCloneTask();
     }

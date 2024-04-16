@@ -192,7 +192,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 super.tasks.put(task.getId(), task);
                 return task;
             case "EPIC": {
-                Epic epic = new Epic(data[2], data[4], TaskStatus.valueOf(data[3]));
+                Epic epic = new Epic(data[2], data[4], TaskStatus.valueOf(data[3]),
+                        LocalDateTime.parse(data[5], format), LocalDateTime.parse(data[6], format),
+                        Duration.of(Integer.parseInt(data[7]), ChronoUnit.MINUTES));
                 epic.setId(Integer.parseInt(data[0]));
                 super.epics.put(epic.getId(), epic);
                 return epic;

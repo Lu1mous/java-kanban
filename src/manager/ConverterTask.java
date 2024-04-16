@@ -14,7 +14,9 @@ public class ConverterTask {
 
     public static String epicToCsv(Epic epic) {
         return epic.getId() + "," + TypeTask.EPIC + "," + epic.getName() + "," + epic.getStatus()
-                + "," + epic.getDescription() + "," + "\n";
+                + "," + epic.getDescription() + "," + epic.getStartTime().format(Task.getDataTimeFormat())
+                + "," + epic.getEndTime().format(Task.getDataTimeFormat())
+                + "," + epic.getDuration().toMinutes() + "\n";
     }
 
     public static String subtaskToCsv(Subtask subtask) {
