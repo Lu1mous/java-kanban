@@ -10,6 +10,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
 
@@ -170,28 +174,36 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private void historyFromString(String value) {
-        super.getTaskOfId(Integer.parseInt(value));
-        super.getEpicOfId(Integer.parseInt(value));
-        super.getSubtaskOfId(Integer.parseInt(value));
+        int id = Integer.parseInt(value);
+        super.getTaskOfId(id);
+        super.getEpicOfId(id);
+        super.getSubtaskOfId(id);
     }
 
     private Task fromString(String value) {
         String[] data = value.split(",");
+        DateTimeFormatter format = Task.getDataTimeFormat();
         switch (data[1]) {
             case "TASK":
-                Task task = new Task(data[2], data[4], TaskStatus.valueOf(data[3]));
+                Task task = new Task(data[2], data[4], TaskStatus.valueOf(data[3]),
+                        LocalDateTime.parse(data[5], format),
+                        Duration.of(Integer.parseInt(data[6]), ChronoUnit.MINUTES));
                 task.setId(Integer.parseInt(data[0]));
                 super.tasks.put(task.getId(), task);
                 return task;
             case "EPIC": {
-                Epic epic = new Epic(data[2], data[4], TaskStatus.valueOf(data[3]));
+                Epic epic = new Epic(data[2], data[4], TaskStatus.valueOf(data[3]),
+                        LocalDateTime.parse(data[5], format), LocalDateTime.parse(data[6], format),
+                        Duration.of(Integer.parseInt(data[7]), ChronoUnit.MINUTES));
                 epic.setId(Integer.parseInt(data[0]));
                 super.epics.put(epic.getId(), epic);
                 return epic;
             }
             case "SUBTASK": {
                 Epic epic = epics.get(Integer.parseInt(data[5]));
-                Subtask subtask = new Subtask(data[2], data[4], TaskStatus.valueOf(data[3]), epic);
+                Subtask subtask = new Subtask(data[2], data[4], TaskStatus.valueOf(data[3]), epic,
+                        LocalDateTime.parse(data[6], format),
+                        Duration.of(Integer.parseInt(data[7]), ChronoUnit.MINUTES));
                 subtask.setId(Integer.parseInt(data[0]));
                 super.subtasks.put(subtask.getId(), subtask);
                 return subtask;

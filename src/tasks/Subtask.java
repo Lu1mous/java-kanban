@@ -1,10 +1,19 @@
 package tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
     private final Epic epic;
 
     public Subtask(String name, String description, TaskStatus status, Epic epic) {
         super(name, description, status);
+        this.epic = epic;
+        epic.addSubtask(this);
+    }
+
+    public Subtask(String name, String description, TaskStatus status, Epic epic, LocalDateTime startTime, Duration duration) {
+        super(name, description, status,startTime, duration);
         this.epic = epic;
         epic.addSubtask(this);
     }
