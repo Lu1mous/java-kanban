@@ -136,12 +136,12 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateTask(Task task) {
         boolean isIntersection = priorityTasks
                 .stream()
-                .filter(t -> !(t.equals(task)))
+                .filter(t -> t.getId() != task.getId())
                 .anyMatch(task1 -> task1.isIntersection(task));
         if (!isIntersection) {
             tasks.put(task.getId(), task);
             priorityTasks = priorityTasks.stream()
-                    .filter(task1 -> !(task1.equals(task)))
+                    .filter(task1 -> task1.getId() != task.getId())
                     .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Task::getStartTime))));
             priorityTasks.add(task);
         } else {
@@ -152,10 +152,6 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateEpic(Epic epic) {
         epics.put(epic.getId(), epic);
-        priorityTasks = priorityTasks.stream()
-                .filter(epic1 -> !(epic1.equals(epic)))
-                .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Task::getStartTime))));
-        priorityTasks.add(epic);
         updateStatusOfEpic(epic);
     }
 
@@ -163,12 +159,12 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateSubtask(Subtask subtask) {
         boolean isIntersection = priorityTasks
                 .stream()
-                .filter(t -> !(t.equals(subtask)))
+                .filter(t -> t.getId() != subtask.getId())
                 .anyMatch(task1 -> task1.isIntersection(subtask));
         if (!isIntersection) {
             subtasks.put(subtask.getId(), subtask);
             priorityTasks = priorityTasks.stream()
-                    .filter(subtask1 -> !(subtask1.equals(subtask)))
+                    .filter(subtask1 -> subtask1.getId() != subtask.getId())
                     .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Task::getStartTime))));
             priorityTasks.add(subtask);
             updateStatusOfEpic(subtask.getEpic());
