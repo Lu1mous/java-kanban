@@ -8,7 +8,7 @@ import jsontypeadapter.DurationAdapter;
 import jsontypeadapter.EpicAdapter;
 import jsontypeadapter.LocalDateTimeAdapter;
 import jsontypeadapter.SubtaskAdapter;
-import jsonTypeToken.TaskListTypeToken;
+import jsontypetoken.TaskListTypeToken;
 import manager.TaskManager;
 import tasks.Epic;
 import tasks.Subtask;
