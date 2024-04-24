@@ -1,10 +1,10 @@
 package server;
 
 import com.google.gson.*;
-import jsonTypeAdapter.DurationAdapter;
-import jsonTypeAdapter.EpicAdapter;
-import jsonTypeAdapter.LocalDateTimeAdapter;
-import jsonTypeAdapter.SubtaskAdapter;
+import jsontypeadapter.DurationAdapter;
+import jsontypeadapter.EpicAdapter;
+import jsontypeadapter.LocalDateTimeAdapter;
+import jsontypeadapter.SubtaskAdapter;
 import jsonTypeToken.EpicListTypeToken;
 import jsonTypeToken.SubtaskListTypeToken;
 import jsonTypeToken.TaskListTypeToken;
