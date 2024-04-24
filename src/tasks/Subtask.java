@@ -4,17 +4,19 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Subtask extends Task {
-    private final Epic epic;
+    private final transient Epic epic;
 
     public Subtask(String name, String description, TaskStatus status, Epic epic) {
         super(name, description, status);
         this.epic = epic;
+        this.type = TypeTask.SUBTASK;
         epic.addSubtask(this);
     }
 
     public Subtask(String name, String description, TaskStatus status, Epic epic, LocalDateTime startTime, Duration duration) {
         super(name, description, status,startTime, duration);
         this.epic = epic;
+        this.type = TypeTask.SUBTASK;
         epic.addSubtask(this);
     }
 

@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public class Main {
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         System.out.println("Начало тесто. Создание объектов.");
         InMemoryTaskManager taskManager = new InMemoryTaskManager();
         taskManager.createTask(new Task("Task_1", "1", TaskStatus.NEW));
@@ -55,5 +55,5 @@ public class Main {
         System.out.println(taskManager.getHistoryTasks());
         System.out.println();
 
-    }
+    }*/
 }

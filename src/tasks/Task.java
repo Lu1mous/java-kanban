@@ -13,11 +13,13 @@ public class Task {
     protected Duration duration;
     protected LocalDateTime startTime;
     private static DateTimeFormatter dataTimeFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+    protected TypeTask type;
 
     public Task(String name, String description, TaskStatus status) {
         this.name = name;
         this.description = description;
         this.status = status;
+        this.type = TypeTask.TASK;
     }
 
     public Task(String name, String description, TaskStatus status, LocalDateTime statTime, Duration duration) {
@@ -26,6 +28,7 @@ public class Task {
         this.status = status;
         this.startTime = statTime;
         this.duration = duration;
+        this.type = TypeTask.TASK;
     }
 
     public String getName() {
@@ -58,6 +61,10 @@ public class Task {
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+
+    public TypeTask getType() {
+        return type;
     }
 
     public Duration getDuration() {
