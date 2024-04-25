@@ -92,6 +92,9 @@ public class SubtasksHandler implements HttpHandler {
             }
             return gson.toJson(subtask);
         } catch (NumberFormatException e) {
+            System.out.println("Ошибка обработки данных " + exchange.getRequestURI().getPath()
+                    + " " + exchange.getRequestMethod());
+            e.getCause();
             return null;
         }
 
@@ -116,11 +119,14 @@ public class SubtasksHandler implements HttpHandler {
                     }
                     return 201;
                 } catch (TaskIsIntersectionException e) {
-                    return 406;
+                    return 203;
                 }
             }
             return 404;
         } catch (IOException e) {
+            System.out.println("Ошибка обработки данных " + exchange.getRequestURI().getPath()
+                    + " " + exchange.getRequestMethod());
+            e.getCause();
             return 500;
         }
     }
@@ -141,6 +147,9 @@ public class SubtasksHandler implements HttpHandler {
             }
             return 404;
         } catch (IOException e) {
+            System.out.println("Ошибка обработки данных " + exchange.getRequestURI().getPath()
+                    + " " + exchange.getRequestMethod());
+            e.getCause();
             return 500;
         }
     }
