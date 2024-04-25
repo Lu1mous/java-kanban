@@ -86,7 +86,7 @@ public class TasksHandler implements HttpHandler {
         } catch (NumberFormatException e) {
             System.out.println("Ошибка обработки данных " + exchange.getRequestURI().getPath()
                     + " " + exchange.getRequestMethod());
-            e.getCause();
+            e.printStackTrace();
             return null;
         }
 
@@ -114,11 +114,12 @@ public class TasksHandler implements HttpHandler {
                     return 203;
                 }
             }
-            return 404;
+            throw new IOException();
+            //return 404;
         } catch (IOException e) {
             System.out.println("Ошибка обработки данных " + exchange.getRequestURI().getPath()
                     + " " + exchange.getRequestMethod());
-            e.getCause();
+            e.printStackTrace();
             return 500;
         }
     }
@@ -141,7 +142,7 @@ public class TasksHandler implements HttpHandler {
         } catch (IOException e) {
             System.out.println("Ошибка обработки данных " + exchange.getRequestURI().getPath()
                     + " " + exchange.getRequestMethod());
-            e.getCause();
+            e.printStackTrace();
             return 500;
         }
     }

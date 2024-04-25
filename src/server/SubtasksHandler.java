@@ -94,7 +94,7 @@ public class SubtasksHandler implements HttpHandler {
         } catch (NumberFormatException e) {
             System.out.println("Ошибка обработки данных " + exchange.getRequestURI().getPath()
                     + " " + exchange.getRequestMethod());
-            e.getCause();
+            e.printStackTrace();
             return null;
         }
 
@@ -126,7 +126,7 @@ public class SubtasksHandler implements HttpHandler {
         } catch (IOException e) {
             System.out.println("Ошибка обработки данных " + exchange.getRequestURI().getPath()
                     + " " + exchange.getRequestMethod());
-            e.getCause();
+            e.printStackTrace();
             return 500;
         }
     }
@@ -149,7 +149,7 @@ public class SubtasksHandler implements HttpHandler {
         } catch (IOException e) {
             System.out.println("Ошибка обработки данных " + exchange.getRequestURI().getPath()
                     + " " + exchange.getRequestMethod());
-            e.getCause();
+            e.printStackTrace();
             return 500;
         }
     }
