@@ -12,6 +12,7 @@ public class Epic extends Task {
     public Epic(String name, String description, TaskStatus status) {
         super(name, description, status);
         this.subtasks = new ArrayList<>();
+        this.type = TypeTask.EPIC;
     }
 
     public Epic(String name, String description, TaskStatus status, LocalDateTime startTime,
@@ -19,6 +20,7 @@ public class Epic extends Task {
         super(name, description, status, startTime, duration);
         this.subtasks = new ArrayList<>();
         this.endTime = endTime;
+        this.type = TypeTask.EPIC;
     }
 
     public ArrayList<Subtask> getSubtasks() {

@@ -48,4 +48,8 @@ public interface TaskManager {
 
     List<Task> getHistoryTasks();
 
+    Collection<Task> getPrioritizedTasks();
+
+    Epic getEpicOfIdWithoutHistory(int id);
+
 }

@@ -53,7 +53,6 @@ public abstract class TaskManagerTest {
     @Test
     public void shouldBeCreateTask() {
         Collection<Task> taskCollection = taskManager.getTaskCollection();
-        System.out.println(taskCollection);
         assertEquals(firstTask, taskCollection.toArray()[0], "Задача 1 не создана");
         assertEquals(secondTask, taskCollection.toArray()[1], "Задача 2 не создана");
     }
